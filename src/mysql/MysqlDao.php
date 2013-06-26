@@ -6,7 +6,7 @@ use app\data\Document;
 use app\data\InvalidPropertyValue;
 
 /**
- * @property \testomato\Mysql $provider
+ * @property \testomato\Mysql $provider // FIXME remove external dependencies
  * @author Roman Ozana <ozana@omdesign.cz>
  */
 class MysqlDao extends Dao {
@@ -143,6 +143,7 @@ class MysqlDao extends Dao {
 	}
 
 	/**
+	 * FIXME remove external dependencies
 	 * @return \w\dal\DbPdoConnection
 	 */
 	protected function getSlave() {
@@ -150,6 +151,7 @@ class MysqlDao extends Dao {
 	}
 
 	/**
+	 * FIXME remove external dependencies
 	 * @return \w\dal\DbPdoConnection
 	 */
 	protected function getMaster() {

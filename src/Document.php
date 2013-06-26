@@ -1,6 +1,5 @@
 <?php
 namespace app\data;
-use document\Billing;
 
 /**
  * @author Roman Ozana <ozana@omdesign.cz>
