@@ -1,9 +1,12 @@
 language: php
 php:
-    - 5.4
     - 5.5
+    - 5.4
 
 script: "VERBOSE=true ./tests/run-tests.sh -s tests/"
+
+services:
+  - mongodb
 
 before_script:
 # Install Nette Tester
