@@ -1,0 +1,7 @@
+.DS_Storage
+.project
+.settings
+/nbproject
+/.idea
+/vendor/
+composer.lock
