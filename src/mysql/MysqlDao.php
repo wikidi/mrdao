@@ -24,13 +24,16 @@ class MysqlDao extends Dao {
 	}
 
 	/**
-	 * @param MysqlDocument $document
+	 * @param int|string|mixed $id
 	 * @return bool|null
 	 */
-	public function findById(MysqlDocument $document) {
-		$array = $this->getByValue($document->getId(), $document->getIdName());
+	public function findById($id) {
+		$document = new $this->documentClass();
+		/** @var \app\data\mysql\MysqlDocument $document */
+		$array = $this->getByValue($id, $document->getIdName());
 		return ($array) ? $document->initByArray($array, true) : null;
 	}
+
 
 	/**
 	 * @param mixed $value
@@ -144,6 +147,7 @@ class MysqlDao extends Dao {
 
 	/**
 	 * FIXME remove external dependencies
+	 *
 	 * @return \w\dal\DbPdoConnection
 	 */
 	protected function getSlave() {
@@ -152,6 +156,7 @@ class MysqlDao extends Dao {
 
 	/**
 	 * FIXME remove external dependencies
+	 *
 	 * @return \w\dal\DbPdoConnection
 	 */
 	protected function getMaster() {
