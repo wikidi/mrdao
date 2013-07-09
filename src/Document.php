@@ -49,7 +49,6 @@ abstract class Document {
 	public function initByArray(array $array, $exists = null) {
 		foreach ($array as $name => $value) {
 			$property = static::getPropertyName($name);
-			dump($property);
 			$this->{$property} = $value;
 		}
 		$this->exists($exists);

@@ -21,7 +21,6 @@ class MongoDao extends Dao {
 		$document = new $this->documentClass();
 		/** @var \app\data\mongo\MongoDocument $document */
 		$array = $this->getByValue(Helper::getMongoId($id), $document->getIdName());
-		dump($array);
 		return ($array) ? $document->initByArray($array, true) : null;
 	}
 
