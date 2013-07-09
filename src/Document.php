@@ -49,6 +49,7 @@ abstract class Document {
 	public function initByArray(array $array, $exists = null) {
 		foreach ($array as $name => $value) {
 			$property = static::getPropertyName($name);
+			dump($property);
 			$this->{$property} = $value;
 		}
 		$this->exists($exists);
@@ -82,7 +83,8 @@ abstract class Document {
 	public static function dao() {
 		$dao = DataModel::instance()->dao(
 			static::getDaoClass('Dao'),
-			static::getStorageName()
+			static::getStorageName(),
+			static::getClass()
 		);
 		return $dao;
 	}
@@ -92,7 +94,14 @@ abstract class Document {
 	 * @return string
 	 */
 	protected static function getDaoClass($dao) {
-		return '\\' . strtolower(get_called_class()) . '\\' . $dao;
+		return '\\' . strtolower(static::getClass()) . '\\' . $dao;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected static function getClass() {
+		return get_called_class();
 	}
 
 }

@@ -13,11 +13,21 @@ class Dao {
 	/** @var \w\data\Provider */
 	protected $provider;
 
+	/** @var string */
+	protected $documentClass;
+
 	/**
 	 * @param Provider $provider
 	 */
 	public function __construct(Provider $provider) {
 		$this->provider = $provider;
+	}
+
+	/**
+	 * @param string $class
+	 */
+	public function setDocumentClass($class) {
+		$this->documentClass = $class;
 	}
 
 	/**

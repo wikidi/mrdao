@@ -7,9 +7,12 @@ use \app\data\mongo\Helper;
 
 require __DIR__ . '/../bootstrap.php';
 
-// check instance
-Assert::true(Helper::getMongoId() instanceof \MongoId);
-Assert::true(Helper::getMongoId('51cace05d30acebe36000000') instanceof \MongoId);
+// check new instance
+$id = Helper::getMongoId();
+Assert::true($id instanceof \MongoId);
+
+// existing ID
+Assert::true(Helper::getMongoId(strval($id)) instanceof \MongoId);
 
 // check to string value
 Assert::same(

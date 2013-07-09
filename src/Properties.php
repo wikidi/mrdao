@@ -40,13 +40,14 @@ trait Properties {
 	/**
 	 * Return property name from database column name
 	 *
+	 * _id => _id
 	 * this_is_name => thisIsName
 	 *
 	 * @param string $name
 	 * @return string
 	 */
 	public static function getPropertyName($name) {
-		return (strpos($name, '_') === false) ? $name : lcfirst(implode(array_map('ucfirst', explode('_', $name))));
+		return (strpos($name, '_') === 0) ? $name : lcfirst(implode(array_map('ucfirst', explode('_', $name))));
 	}
 
 	/**

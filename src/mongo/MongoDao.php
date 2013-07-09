@@ -14,14 +14,26 @@ class MongoDao extends Dao {
 	public static $options = array();
 
 	/**
-	 * @param MongoDocument $document
+	 * @param \MongoId|string|mixed $id
 	 * @return bool|null
 	 */
-	public function findById(MongoDocument $document) {
-		$array = $this->getByValue($document->getId(), $document->getIdName());
+	public function findById($id) {
+		$document = new $this->documentClass();
+		/** @var \app\data\mongo\MongoDocument $document */
+		$array = $this->getByValue(Helper::getMongoId($id), $document->getIdName());
+		dump($array);
 		return ($array) ? $document->initByArray($array, true) : null;
 	}
 
+	/**
+	 * @param mixed $value
+	 * @param string $column
+	 * @internal param \app\data\mysql\MysqlDocument $document
+	 * @return mixed|array
+	 */
+	public function getByValue($value, $column) {
+		return $this->getCollection()->findOne(array($column => $value));
+	}
 
 	/**
 	 * @param MongoDocument $document
