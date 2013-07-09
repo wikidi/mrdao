@@ -19,7 +19,7 @@ class Helper {
 	 * @param bool $skipId
 	 * @return array
 	 */
-	public static function toDataArray(&$document, $key, $skipId = false) {
+	public static function toDataArray(MongoDocument &$document, $key, $skipId = false) {
 		$document = $document->toDataArray($skipId);
 	}
 

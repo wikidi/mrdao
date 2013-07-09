@@ -13,12 +13,11 @@ class MongoDao extends Dao {
 	/** @var array */
 	public static $options = array();
 
-
 	/**
-	 * @param MysqlDocument $document
+	 * @param MongoDocument $document
 	 * @return bool|null
 	 */
-	public function findById(MysqlDocument $document) {
+	public function findById(MongoDocument $document) {
 		$array = $this->getByValue($document->getId(), $document->getIdName());
 		return ($array) ? $document->initByArray($array, true) : null;
 	}
@@ -26,13 +25,14 @@ class MongoDao extends Dao {
 
 	/**
 	 * @param MongoDocument $document
+	 * @param array $options
 	 * @return bool
 	 */
-	public function save(MongoDocument $document) {
+	public function save(MongoDocument $document, array $options = array()) {
 		if ($document->exists()) {
-			return $this->update($document);
+			return $this->update($document, $options);
 		} else {
-			return $this->insert($document);
+			return $this->insert($document, $options);
 		}
 	}
 
@@ -63,7 +63,8 @@ class MongoDao extends Dao {
 	 * @return bool
 	 */
 	public function insert(MongoDocument $document, array $options = array()) {
-		$response = $this->getCollection()->insert($document->toDataObject(), static::options($options));
+		if (!$document->getId()) $document->setId(new \MongoId());
+		$response = $this->getCollection()->insert($document->toDataArray(), static::options($options));
 		return Helper::boolResponse($response);
 	}
 

@@ -15,24 +15,8 @@ class MongoDocument extends Document {
 	public static $collectionName = null;
 
 	/**
-	 * @param string $name
-	 * @return string
-	 */
-	public static function getPropertyName($name) {
-		if ($name === '_id') return 'id';
-		return parent::getPropertyName($name);
-	}
-
-	/**
-	 * @param string $name
-	 * @return string
-	 */
-	public static function getColumnName($name) {
-		if ($name === 'id') return '_id';
-		return parent::getColumnName($name);
-	}
-
-	/**
+	 * Return \MongoId intance
+	 *
 	 * @return \MongoId
 	 */
 	public function getMongoId() {
@@ -67,5 +51,4 @@ class MongoDocument extends Document {
 		return $this->dao()->save($this);
 	}
 
-	// TODO ...
 }
