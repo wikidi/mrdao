@@ -24,7 +24,7 @@ trait Storage {
 	public static function getStorageName() {
 		if (static::$storageName === null) {
 			$class = explode('\\', get_called_class());
-			static::$storageName = strtolower(end($class));
+			static::$storageName = strtolower(implode('_', preg_split('/(?=[A-Z])/', lcfirst(end($class)))));
 		}
 
 		return static::$storageName;
