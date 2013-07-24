@@ -1,9 +1,9 @@
 <?php
-namespace app\data\mysql;
-use app\data\Dao;
-use app\data\DataModel;
-use app\data\Document;
-use app\data\InvalidPropertyValue;
+namespace mrdao\mysql;
+use mrdao\Dao;
+use mrdao\DataModel;
+use mrdao\Document;
+use mrdao\InvalidPropertyValue;
 
 /**
  * @property \testomato\Mysql $provider // FIXME remove external dependencies
@@ -29,7 +29,7 @@ class MysqlDao extends Dao {
 	 */
 	public function findById($id) {
 		$document = new $this->documentClass();
-		/** @var \app\data\mysql\MysqlDocument $document */
+		/** @var \mrdao\mysql\MysqlDocument $document */
 		$array = $this->getByValue($id, $document->getIdName());
 		return ($array) ? $document->initByArray($array, true) : null;
 	}
@@ -38,7 +38,7 @@ class MysqlDao extends Dao {
 	/**
 	 * @param mixed $value
 	 * @param string $column
-	 * @internal param \app\data\mysql\MysqlDocument $document
+	 * @internal param \mrdao\mysql\MysqlDocument $document
 	 * @return mixed|array
 	 */
 	public function getByValue($value, $column) {
@@ -77,7 +77,7 @@ class MysqlDao extends Dao {
 
 	/**
 	 * @param MysqlDocument $document
-	 * @throws \app\data\InvalidPropertyValue
+	 * @throws \mrdao\InvalidPropertyValue
 	 * @return bool
 	 */
 	public function update(MysqlDocument $document) {

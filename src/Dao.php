@@ -1,8 +1,8 @@
 <?php
-namespace app\data;
+namespace mrdao;
 
 use w\data\Provider;
-use app\data\Document;
+use mrdao\Document;
 
 /**
  * @author Roman Ozana <ozana@omdesign.cz>
@@ -33,11 +33,11 @@ class Dao {
 	/**
 	 * Return Document data as array()
 	 *
-	 * @param \app\data\Document $document
+	 * @param \mrdao\Document $document
 	 * @param bool $skipId
 	 * @return array
 	 */
-	public static function getDataArray(\app\data\Document $document, $skipId = false) {
+	public static function getDataArray(\mrdao\Document $document, $skipId = false) {
 		$data = array();
 		foreach (get_object_vars($document) as $name => $value) {
 			if ($skipId && $document->getIdName() === $name) continue;

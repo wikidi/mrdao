@@ -1,5 +1,5 @@
 <?php
-use \app\data\mongo\Helper;
+use \mrdao\mongo\Helper;
 
 /**
  * @author Roman Ozana <ozana@omdesign.cz>

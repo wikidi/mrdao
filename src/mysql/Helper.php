@@ -1,5 +1,5 @@
 <?php
-namespace app\data\mysql;
+namespace mrdao\mysql;
 /**
  * @author Roman Ozana <ozana@omdesign.cz>
  */

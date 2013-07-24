@@ -1,5 +1,5 @@
 <?php
-namespace app\data;
+namespace mrdao;
 /**
  * @author Roman Ozana <ozana@omdesign.cz>
  */

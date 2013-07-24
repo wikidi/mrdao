@@ -1,8 +1,8 @@
 <?php
-namespace app\data\mongo;
+namespace mrdao\mongo;
 
-use app\data\Dao;
-use app\data\DataModel;
+use mrdao\Dao;
+use mrdao\DataModel;
 
 /**
  * @property \testomato\Mongo $provider // FIXME remove external dependencies
@@ -19,7 +19,7 @@ class MongoDao extends Dao {
 	 */
 	public function findById($id) {
 		$document = new $this->documentClass();
-		/** @var \app\data\mongo\MongoDocument $document */
+		/** @var \mrdao\mongo\MongoDocument $document */
 		$array = $this->getByValue(Helper::getMongoId($id), $document->getIdName());
 		return ($array) ? $document->initByArray($array, true) : null;
 	}
@@ -27,7 +27,7 @@ class MongoDao extends Dao {
 	/**
 	 * @param mixed $value
 	 * @param string $column
-	 * @internal param \app\data\mysql\MysqlDocument $document
+	 * @internal param \mrdao\mysql\MysqlDocument $document
 	 * @return mixed|array
 	 */
 	public function getByValue($value, $column) {

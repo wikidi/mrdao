@@ -1,5 +1,5 @@
 <?php
-namespace app\data;
+namespace mrdao;
 
 /**
  * @author Roman Ozana <ozana@omdesign.cz>
@@ -62,7 +62,7 @@ abstract class Document {
 	 * @return array
 	 */
 	public function toDataArray($skipId = false) {
-		return \app\data\Dao::getDataArray($this, $skipId);
+		return \mrdao\Dao::getDataArray($this, $skipId);
 	}
 
 	/**

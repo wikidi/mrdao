@@ -1,5 +1,5 @@
 <?php
-namespace app\data\mongo;
+namespace mrdao\mongo;
 /**
  * @author Roman Ozana <ozana@omdesign.cz>
  */

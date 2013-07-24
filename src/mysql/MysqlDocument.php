@@ -1,10 +1,10 @@
 <?php
-namespace app\data\mysql;
-use app\data\Document;
+namespace mrdao\mysql;
+use mrdao\Document;
 
 
 /**
- * @method static \app\data\mysql\MysqlDao dao()
+ * @method static \mrdao\mysql\MysqlDao dao()
  * @author Roman Ozana <ozana@omdesign.cz>
  */
 class MysqlDocument extends Document {

@@ -1,5 +1,5 @@
 <?php
-use app\data\Document;
+use mrdao\Document;
 
 /**
  * @author Roman Ozana <ozana@omdesign.cz>

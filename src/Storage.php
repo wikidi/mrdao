@@ -1,5 +1,5 @@
 <?php
-namespace app\data;
+namespace mrdao;
 /**
  * @author Roman Ozana <ozana@omdesign.cz>
  */
@@ -8,13 +8,7 @@ trait Storage {
 	/** @var string */
 	public static $storageName = null;
 
-	/**
-	 * @param string $name
-	 * @return void
-	 */
-	public static function setStorageName($name) {
-		static::$storageName = $name;
-	}
+	public static $storages = array();
 
 	/**
 	 * Return simplest storage name according Class name
@@ -22,12 +16,20 @@ trait Storage {
 	 * @return string
 	 */
 	public static function getStorageName() {
-		if (static::$storageName === null) {
-			$class = explode('\\', get_called_class());
-			static::$storageName = strtolower(implode('_', preg_split('/(?=[A-Z])/', lcfirst(end($class)))));
+
+		dump(get_called_class());
+		if (static::$storageName) return static::$storageName;
+
+		static::$storages[get_called_class()] = 'aa';
+		dump(static::$storages);
+
+		// cache storages name
+		if (array_key_exists(get_called_class(), static::$storages)) {
+			return static::$storages[get_called_class()];
 		}
 
-		return static::$storageName;
+		$class = explode('\\', get_called_class());
+		return self::$storages[get_called_class()] = strtolower(implode('_', preg_split('/(?=[A-Z])/', lcfirst(end($class)))));
 	}
 
 }

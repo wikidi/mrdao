@@ -1,9 +1,9 @@
 <?php
-namespace app\data\mongo;
-use app\data\Document;
+namespace mrdao\mongo;
+use mrdao\Document;
 
 /**
- * @method static \app\data\mongo\MongoDao dao()
+ * @method static \mrdao\mongo\MongoDao dao()
  * @author Roman Ozana <ozana@omdesign.cz>
  */
 class MongoDocument extends Document {
