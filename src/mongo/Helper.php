@@ -10,11 +10,11 @@ class Helper {
 	 * @return \MongoId
 	 */
 	public static function getMongoId($id = null) {
-		return new \MongoId(strval($id));
+		return new \MongoId($id ? strval($id) : null);
 	}
 
 	/**
-	 * @param MongoDocument $document
+	 * @param MongoDocument &$document
 	 * @param string|int| $key
 	 * @param bool $skipId
 	 * @return array

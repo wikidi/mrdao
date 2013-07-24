@@ -1,5 +1,6 @@
 <?php
 namespace mrdao;
+use app\data\DataModel;
 
 /**
  * @author Roman Ozana <ozana@omdesign.cz>

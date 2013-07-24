@@ -6,9 +6,18 @@ namespace mrdao;
 trait Storage {
 
 	/** @var string */
-	public static $storageName = null;
+	public static $storage = null;
 
-	public static $storages = array();
+	/**
+	 * @param string $storage
+	 */
+	public static function setStorageName($storage) {
+		if (is_string(static::$storage)) {
+			static::$storage = $storage;
+		} else {
+			static::$storage[get_called_class()] = $storage;
+		}
+	}
 
 	/**
 	 * Return simplest storage name according Class name
@@ -16,20 +25,16 @@ trait Storage {
 	 * @return string
 	 */
 	public static function getStorageName() {
+		if (is_string(static::$storage)) return static::$storage; // storage is string? return
 
-		dump(get_called_class());
-		if (static::$storageName) return static::$storageName;
-
-		static::$storages[get_called_class()] = 'aa';
-		dump(static::$storages);
-
-		// cache storages name
-		if (array_key_exists(get_called_class(), static::$storages)) {
-			return static::$storages[get_called_class()];
+		if (array_key_exists(get_called_class(), (array)static::$storage)) {
+			return static::$storage[get_called_class()];
 		}
 
 		$class = explode('\\', get_called_class());
-		return self::$storages[get_called_class()] = strtolower(implode('_', preg_split('/(?=[A-Z])/', lcfirst(end($class)))));
+		return self::$storage[get_called_class()] = strtolower(
+			implode('_', preg_split('/(?=[A-Z])/', lcfirst(end($class))))
+		);
 	}
 
 }
