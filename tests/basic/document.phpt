@@ -31,8 +31,8 @@ class TestDocumentTree extends TestDocument {
 
 // simple get storage name
 Assert::same('document', Document::getStorageName());
-Assert::same('document', \mrdao\mysql\MysqlDocument::getStorageName());
-Assert::same('document', \mrdao\mongo\MongoDocument::getStorageName());
+Assert::same('mysql_document', \mrdao\mysql\MysqlDocument::getStorageName());
+Assert::same('mongo_document', \mrdao\mongo\MongoDocument::getStorageName());
 Assert::same('test_document', TestDocument::getStorageName());
 Assert::same('test_document_two', TestDocumentTwo::getStorageName());
 
