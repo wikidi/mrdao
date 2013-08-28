@@ -1,0 +1,21 @@
+{
+  "name": "mrdao",
+  "version": "0.0.4",
+  "description": "(Simpler) DAO and Documents layer for Mongo, Mysql",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/wikidi/mrdao.git"
+  },
+  "keywords": [
+    "dao",
+    "php"
+  ],
+  "author": "Devel lab s.r.o.",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/wikidi/mrdao/issues"
+  },
+  "dependencies": {
+    "grunt-bump": "0.0.11"
+  }
+}
