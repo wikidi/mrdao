@@ -5,7 +5,7 @@ if (@!include __DIR__ . '/../vendor/autoload.php') {
 	exit(1);
 }
 
-
+Tester\Environment::setup();
 
 // configure environment
 // configure environment
