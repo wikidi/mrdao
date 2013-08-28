@@ -41,13 +41,14 @@ trait Properties {
 	 * Return property name from database column name
 	 *
 	 * _id => _id
+	 * _Leave_me_aSIs => _Leave_me_aSIs
 	 * this_is_name => thisIsName
 	 *
 	 * @param string $name
 	 * @return string
 	 */
 	public static function getPropertyName($name) {
-		return (strpos($name, '_') === 0) ? $name : lcfirst(implode(array_map('ucfirst', explode('_', $name))));
+		return ($name[0] === '_') ? $name : lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $name))));
 	}
 
 	/**
@@ -59,7 +60,7 @@ trait Properties {
 	 * @return string
 	 */
 	public static function getColumnName($name) {
-		return strtolower(implode('_', preg_split('/(?=[A-Z])/', $name)));
+		return strtolower(preg_replace('/(?=[A-Z])/', '_$1', $name)); // faster
 	}
 
 }

@@ -34,7 +34,7 @@ abstract class Document {
 	 * @param bool|null $exists
 	 * @return static
 	 */
-	public static function fromArray(array $array, $exists = null) {
+	public static function fromArray(array $array, $exists = true) {
 		$object = new static;
 		/** @var Document $object */
 		return $object->initByArray($array, $exists);
@@ -47,7 +47,7 @@ abstract class Document {
 	 * @param bool|null $exists
 	 * @return bool
 	 */
-	public function initByArray(array $array, $exists = null) {
+	public function initByArray(array $array, $exists = true) {
 		foreach ($array as $name => $value) {
 			$property = static::getPropertyName($name);
 			$this->{$property} = $value;
