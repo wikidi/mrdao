@@ -94,7 +94,14 @@ abstract class Document {
 	 * @return string
 	 */
 	protected static function getDaoClass($dao) {
-		return '\\' . strtolower(static::getClass()) . '\\' . $dao;
+		return
+			preg_replace_callback(
+				'/\\\(\w)/',
+				function ($m) {
+					return '\\' . strtolower($m[1]);
+				},
+				static::getClass()
+			) . '\\' . $dao;
 	}
 
 	/**
