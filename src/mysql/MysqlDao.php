@@ -28,10 +28,9 @@ class MysqlDao extends Dao {
 	 * @return bool|null
 	 */
 	public function findById($id) {
-		$document = new $this->documentClass();
-		/** @var \mrdao\mysql\MysqlDocument $document */
-		$array = $this->getByValue($id, $document->getIdName());
-		return ($array) ? $document->initByArray($array, true) : null;
+		$documentClass = $this->documentClass;
+		$array = $this->getByValue($id, $documentClass::getIdName());
+		return $array ? $this->fromArray($array, true) : null;
 	}
 
 

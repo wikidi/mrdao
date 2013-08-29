@@ -23,11 +23,14 @@ Assert::true($test->exists());
 // create new Document from array
 
 $array = array('one' => 1, 'two' => 2, 'tree' => 3);
-$test = TestDocument::fromArray($array);
+$test = new TestDocument;
+$test = $test->initByArray($array);
 Assert::true($test->exists());
 
-$test = TestDocument::fromArray($array, false);
+$test = new TestDocument;
+$test = $test->initByArray($array, false);
 Assert::false($test->exists());
 
-$test = TestDocument::fromArray($array, null);
+$test = new TestDocument;
+$test = $test->initByArray($array, null);
 Assert::false($test->exists());

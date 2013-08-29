@@ -18,10 +18,9 @@ class MongoDao extends Dao {
 	 * @return bool|null
 	 */
 	public function findById($id) {
-		$document = new $this->documentClass();
-		/** @var \mrdao\mongo\MongoDocument $document */
-		$array = $this->getByValue(Helper::getMongoId($id), $document->getIdName());
-		return ($array) ? $document->initByArray($array, true) : null;
+		$documentClass = $this->documentClass;
+		$array = $this->getByValue(Helper::getMongoId($id), $documentClass::getIdName());
+		return ($array) ? $this->fromArray($array, true) : null;
 	}
 
 	/**

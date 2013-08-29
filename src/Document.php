@@ -4,15 +4,18 @@ use app\data\DataModel;
 
 /**
  * @author Roman Ozana <ozana@omdesign.cz>
+ * @author Jan Prachař <jan.prachar@gmail.com>
  */
 abstract class Document {
 
 	use Validation; // Document Validation trait
-	use Storage; // Document Storage trait
 	use Properties; // Document Properties trait
 
 	/** @var bool */
 	protected $exists = false;
+
+	/** @var Dao */
+	protected  $dao;
 
 	/**
 	 * @param string $name
@@ -24,16 +27,11 @@ abstract class Document {
 	}
 
 	/**
-	 * Return new Document instance from Array
-	 *
-	 * @param array $array
-	 * @param bool|null $exists
-	 * @return static
+	 * @param Dao $dao 
+	 * @return void
 	 */
-	public static function fromArray(array $array, $exists = true) {
-		$object = new static;
-		/** @var Document $object */
-		return $object->initByArray($array, $exists);
+	public function setDao(Dao $dao) {
+		$this->dao = $dao;
 	}
 
 	/**
@@ -71,33 +69,6 @@ abstract class Document {
 	public function exists($exists = null) {
 		if (is_bool($exists)) $this->exists = $exists;
 		return (bool)$this->exists;
-	}
-
-	/**
-	 * @return Dao
-	 */
-	protected static function dao() {
-		$dao = DataModel::instance()->dao(
-			static::getDaoClass('Dao'),
-			static::getStorageName(),
-			static::getClass()
-		);
-		return $dao;
-	}
-
-	/**
-	 * @param string $dao
-	 * @return string
-	 */
-	protected static function getDaoClass($dao) {
-		return
-			preg_replace_callback(
-				'/\\\(\w)/',
-				function ($m) {
-					return '\\' . strtolower($m[1]);
-				},
-				static::getClass()
-			) . '\\' . $dao;
 	}
 
 	/**

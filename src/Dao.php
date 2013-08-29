@@ -6,6 +6,7 @@ use mrdao\Document;
 
 /**
  * @author Roman Ozana <ozana@omdesign.cz>
+ * @author Jan Prachař <jan.prachar@gmail.com>
  */
 class Dao {
 	use Storage;
@@ -21,13 +22,43 @@ class Dao {
 	 */
 	public function __construct(Provider $provider) {
 		$this->provider = $provider;
+		$this->documentClass = $this->getDocumentClass();
 	}
 
 	/**
-	 * @param string $class
+	 * @return string
 	 */
-	public function setDocumentClass($class) {
-		$this->documentClass = $class;
+	protected function getDocumentClass() {
+		$nsParts = explode('\\', get_called_class());
+		if (($l = count($nsParts)) < 2) {
+			return null;
+		}
+		$nsParts[$l - 2] = ucfirst($nsParts[$l - 2]);
+		return implode('\\', array_slice($nsParts, 0, -1));
+	}
+
+	/**
+	 * Creates a new document instance
+	 * 
+	 * @access public
+	 * @return Document
+	 */
+	public function createDocument() {
+		$object = new $this->documentClass;
+		$object->setDao($this);
+		return $object;
+	}
+
+	/**
+	 * Return new Document instance from Array
+	 *
+	 * @param array $array
+	 * @param bool|null $exists
+	 */
+	public function fromArray(array $array, $exists = true) {
+		$object = $this->createDocument();
+		/** @var Document $object */
+		return $object->initByArray($array, $exists);
 	}
 
 	/**
