@@ -20,11 +20,7 @@ abstract class Document {
 	 * @return mixed
 	 */
 	public function __call($name, $arguments) {
-		if (method_exists($this->dao(), $name)) {
-			return call_user_func_array(array($this->dao(), $name), $arguments);
-		} else {
-			$this->addValidator($name, reset($arguments));
-		}
+		$this->addValidator($name, reset($arguments));
 	}
 
 	/**
@@ -80,7 +76,7 @@ abstract class Document {
 	/**
 	 * @return Dao
 	 */
-	public static function dao() {
+	protected static function dao() {
 		$dao = DataModel::instance()->dao(
 			static::getDaoClass('Dao'),
 			static::getStorageName(),

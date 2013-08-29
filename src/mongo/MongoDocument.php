@@ -3,7 +3,6 @@ namespace mrdao\mongo;
 use mrdao\Document;
 
 /**
- * @method static \mrdao\mongo\MongoDao dao()
  * @author Roman Ozana <ozana@omdesign.cz>
  */
 class MongoDocument extends Document {

@@ -4,7 +4,6 @@ use mrdao\Document;
 
 
 /**
- * @method static \mrdao\mysql\MysqlDao dao()
  * @author Roman Ozana <ozana@omdesign.cz>
  */
 class MysqlDocument extends Document {
