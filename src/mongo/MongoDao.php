@@ -7,6 +7,7 @@ use mrdao\DataModel;
 /**
  * @property IMongoProvider $provider
  * @author Roman Ozana <ozana@omdesign.cz>
+ * @author Jan Prachař <jan.prachar@gmail.com>
  */
 class MongoDao extends Dao {
 
@@ -15,11 +16,11 @@ class MongoDao extends Dao {
 
 	/**
 	 * @param \MongoId|string|mixed $id
-	 * @return bool|null
+	 * @return null|MongoDocument
 	 */
 	public function findById($id) {
 		$documentClass = $this->documentClass;
-		$array = $this->getByValue(Helper::getMongoId($id), $documentClass::getIdName());
+		$array = $this->getByValue($id instanceof \MongoId ? $id : new \MongoId($id), $documentClass::getIdName());
 		return ($array) ? $this->fromArray($array, true) : null;
 	}
 
@@ -27,7 +28,7 @@ class MongoDao extends Dao {
 	 * @param mixed $value
 	 * @param string $column
 	 * @internal param \mrdao\mysql\MysqlDocument $document
-	 * @return mixed|array
+	 * @return array
 	 */
 	public function getByValue($value, $column) {
 		return $this->getCollection()->findOne(array($column => $value));
@@ -36,7 +37,10 @@ class MongoDao extends Dao {
 	/**
 	 * @param MongoDocument $document
 	 * @param array $options
-	 * @return bool
+	 * @throws \MongoException
+	 * @throws \MongoCursorException
+	 * @throws \MongoCursorTimeoutException
+	 * @return bool|array
 	 */
 	public function save(MongoDocument $document, array $options = array()) {
 		if ($document->exists()) {
@@ -49,7 +53,9 @@ class MongoDao extends Dao {
 	/**
 	 * @param MongoDocument $document
 	 * @param array $options
-	 * @return bool
+	 * @return bool|array
+	 * @throws \MongoCursorException
+	 * @throws \MongoCursorTimeoutException
 	 * @throws InvalidPropertyValue
 	 */
 	public function update(MongoDocument $document, array $options = array()) {
@@ -58,48 +64,51 @@ class MongoDao extends Dao {
 		}
 
 		// Update whole document data
-		$response = $this->getCollection()->update(
-			array('_id' => Helper::getMongoId($document->getId())),
+		return $this->getCollection()->update(
+			array('_id' => $document->getId()),
 			$document->toDataArray(true),
 			static::options($options)
 		);
-
-		return Helper::boolResponse($response);
 	}
 
 	/**
 	 * @param MongoDocument $document
 	 * @param array $options
-	 * @return bool
+	 * @throws \MongoException
+	 * @throws \MongoCursorException
+	 * @throws \MongoCursorTimeoutException
+	 * @return bool|array
 	 */
 	public function insert(MongoDocument $document, array $options = array()) {
 		if (!$document->getId()) $document->setId(new \MongoId());
-		$response = $this->getCollection()->insert($document->toDataArray(), static::options($options));
-		return Helper::boolResponse($response);
+		return $this->getCollection()->insert($document->toDataArray(), static::options($options));
 	}
 
 	/**
 	 * @param MongoDocument $document
 	 * @param array $options
-	 * @return bool
+	 * @return bool|array
+	 * @throws \MongoCursorException
+	 * @throws \MongoCursorTimeoutException
 	 */
 	public function delete(MongoDocument $document, array $options = array()) {
-		$response = $this->getCollection()->remove(
-			array('_id' => Helper::getMongoId($document->getId())),
+		return $this->getCollection()->remove(
+			array('_id' => $document->getId()),
 			static::options($options)
 		);
-		return Helper::boolResponse($response);
 	}
 
 	/**
 	 * @param array $documents
 	 * @param array $options
-	 * @return bool
+	 * @throws \MongoException
+	 * @throws \MongoCursorException
+	 * @throws \MongoCursorTimeoutException
+	 * @return mixed
 	 */
 	public function batchInsert(array $documents, array $options = array()) {
-		array_walk($documents, array('\\app\\data\\mongo\\Helper', 'toMongoObject'), false);
-		$response = $this->getCollection()->batchInsert($documents, static::options($options));
-		return Helper::boolResponse($response);
+		array_walk($documents, array('\\mrdao\\Dao', 'getDataArray'), false);
+		return $this->getCollection()->batchInsert($documents, static::options($options));
 	}
 
 	/**
