@@ -14,6 +14,13 @@ class MongoDao extends Dao {
 	/** @var array */
 	public static $options = array();
 
+	/** @var \mrdao\mongo\IMongoProvider */
+	public $provider;
+
+	public function __construct(IMongoProvider $provider) {
+		$this->provider = $provider;
+	}
+
 	/**
 	 * @param \MongoId|string|mixed $id
 	 * @return null|MongoDocument
