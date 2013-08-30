@@ -37,7 +37,7 @@ namespace {
 // simple get storage name
 $dao = new \mrdao\Dao;
 Assert::same('mrdao', $dao->getStorageName());
-Assert::same('mrdao', $dao->getDocumentClass());
+Assert::same('Mrdao', $dao->getDocumentClass());
 
 $dao = new \TestDao;
 Assert::same('', $dao->getStorageName());
@@ -45,11 +45,11 @@ Assert::same('', $dao->getDocumentClass());
 
 $dao = new \a\TestDaoTwo;
 Assert::same('a', $dao->getStorageName());
-Assert::same('a', $dao->getDocumentClass());
+Assert::same('A', $dao->getDocumentClass());
 
 $dao = new \a\b\TestDaoTree;
 Assert::same('b', $dao->getStorageName());
-Assert::same('a\b', $dao->getDocumentClass());
+Assert::same('a\B', $dao->getDocumentClass());
 
 // check storage set
 $dao = new \TestDao('bar', 'foo');

@@ -87,7 +87,16 @@ class Dao {
 	 * @return string
 	 */
 	public function getDocumentClass() {
-		return $this->documentClass ?: ($this->documentClass = substr($class = get_called_class(), 0, strrpos($class, '\\')));
+		if ($this->documentClass === null) {
+			$nsParts = explode('\\', get_called_class());
+			if (($l = count($nsParts)) < 2) {
+				return '';
+			}
+			$nsParts[$l - 2] = ucfirst($nsParts[$l - 2]);
+			$this->documentClass = implode('\\', array_slice($nsParts, 0, -1));
+		}
+
+		return $this->documentClass;
 	}
 
 
@@ -96,7 +105,7 @@ class Dao {
 	 */
 	public function getStorageName() {
 		if ($this->storageName === null) {
-			$name = substr($dc = '\\' . $this->getDocumentClass(), strrpos($dc, '\\') + 1);
+			$name = lcfirst(substr($dc = '\\' . $this->getDocumentClass(), strrpos($dc, '\\') + 1));
 			$this->storageName =  (static::$underscore) ? strtolower(preg_replace('/(?=[A-Z])/', '_$1', $name)) : $name;
 		}
 		return $this->storageName;
