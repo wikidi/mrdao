@@ -77,13 +77,4 @@ abstract class Document {
 		return get_called_class();
 	}
 
-	/**
-	 * @param $className
-	 * @return string
-	 */
-	public static function getStorageName($className) {
-		$name = substr($className, strrpos($className, '\\') + 1);
-		return (static::$underscore) ? strtolower(preg_replace('/(?=[A-Z])/', '_$1', $name)) : $name;
-	}
-
 }

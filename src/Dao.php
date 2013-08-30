@@ -21,16 +21,23 @@ class Dao {
 	 *
 	 * @var string
 	 */
-	protected $documentClass;
+	private $documentClass;
+
+	/**
+	 * Name for storage name (e.g. SQL table)
+	 * 
+	 * @var string
+	 */
+	private $storageName;
 
 
 	/**
 	 * @param null|string $documentClass
 	 * @param null|string $storage
 	 */
-	public function __construct($documentClass = null, $storage = null) {
-		$this->documentClass = ($documentClass) ? : substr($class = get_called_class(), 0, strrpos($class, '\\'));
-		$this->storage = ($storage) ? : Document::getStorageName($this->documentClass);
+	public function __construct($documentClass = null, $storageName = null) {
+		$this->documentClass = $documentClass;
+		$this->storageName = $storageName;
 	}
 
 	/**
@@ -40,7 +47,8 @@ class Dao {
 	 * @return Document
 	 */
 	public function createDocument() {
-		$object = new $this->documentClass;
+		$dc = $this->getDocumentClass();
+		$object = new $dc;
 		$object->setDao($this);
 		return $object;
 	}
@@ -73,5 +81,24 @@ class Dao {
 			$data[$property] = $value;
 		}
 		return $data;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDocumentClass() {
+		return $this->documentClass ?: ($this->documentClass = substr($class = get_called_class(), 0, strrpos($class, '\\')));
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getStorageName() {
+		if ($this->storageName === null) {
+			$name = substr($dc = '\\' . $this->getDocumentClass(), strrpos($dc, '\\') + 1);
+			$this->storageName =  (static::$underscore) ? strtolower(preg_replace('/(?=[A-Z])/', '_$1', $name)) : $name;
+		}
+		return $this->storageName;
 	}
 }

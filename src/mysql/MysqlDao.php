@@ -65,7 +65,7 @@ class MysqlDao extends Dao {
 		// prepare INSERT query
 		$query = sprintf(
 			'INSERT INTO `%s` (`%s`) VALUES (%s)',
-			$document->getStorageName(),
+			$this->getStorageName(),
 			implode('`, `', $columns), ':' . implode(', :', $columns)
 		);
 
@@ -98,7 +98,7 @@ class MysqlDao extends Dao {
 
 		$query = sprintf(
 			'UPDATE `%s` SET %s WHERE `%s` = :%s LIMIT 1',
-			$document->getStorageName(),
+			$this->getStorageName(),
 			Helper::getUpdateParis($columns),
 			$document->getIdName(),
 			$document->getIdName()
@@ -123,7 +123,7 @@ class MysqlDao extends Dao {
 	public function delete(MysqlDocument $document) {
 		$query = sprintf(
 			'DELETE FROM `%s` WHERE `%s` = :id LIMIT 1',
-			$document->getStorageName(),
+			$this->getStorageName(),
 			$document->getIdName()
 		);
 		return (bool)$this->query($query, array(':id' => $document->getId()));
