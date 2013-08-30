@@ -6,10 +6,19 @@ use mrdao\Document;
 use mrdao\InvalidPropertyValue;
 
 /**
- * @property \testomato\Mysql $provider // FIXME remove external dependencies
  * @author Roman Ozana <ozana@omdesign.cz>
  */
 class MysqlDao extends Dao {
+
+	/** @var \mrdao\mysql\IMysqlProvider */
+	public $provider;
+
+	/**
+	 * @param IMysqlProvider $provider
+	 */
+	public function __construct(IMysqlProvider $provider) {
+		$this->provider = $provider;
+	}
 
 	/**
 	 * @param MysqlDocument $document
@@ -137,28 +146,10 @@ class MysqlDao extends Dao {
 	 * @return \PDOStatement
 	 */
 	public function query($query, array $params = null) {
-		$pdo = preg_match('/^\s*select|\s*show/i', $query) ? $this->getSlave() : $this->getMaster();
+		$pdo = preg_match('/^\s*select|\s*show/i', $query) ? $this->provider->getSlave() : $this->provider->getMaster();
 		/** @var $pdo \PDO */
 		$statement = $pdo->prepare($query);
 		$statement->execute($params);
 		return $statement;
-	}
-
-	/**
-	 * FIXME remove external dependencies
-	 *
-	 * @return \w\dal\DbPdoConnection
-	 */
-	protected function getSlave() {
-		return $this->provider->getSlave();
-	}
-
-	/**
-	 * FIXME remove external dependencies
-	 *
-	 * @return \w\dal\DbPdoConnection
-	 */
-	protected function getMaster() {
-		return $this->provider->getMaster();
 	}
 }

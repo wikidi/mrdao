@@ -5,7 +5,7 @@ use mrdao\Dao;
 use mrdao\DataModel;
 
 /**
- * @property \testomato\Mongo $provider // FIXME remove external dependencies
+ * @property IMongoProvider $provider
  * @author Roman Ozana <ozana@omdesign.cz>
  */
 class MongoDao extends Dao {

@@ -68,5 +68,4 @@ class Helper {
 		return rtrim($pairs, ', ');
 	}
 
-
 }

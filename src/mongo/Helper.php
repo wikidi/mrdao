@@ -15,11 +15,10 @@ class Helper {
 
 	/**
 	 * @param MongoDocument &$document
-	 * @param string|int| $key
 	 * @param bool $skipId
 	 * @return array
 	 */
-	public static function toDataArray(MongoDocument &$document, $key, $skipId = false) {
+	public static function toDataArray(MongoDocument &$document, $skipId = false) {
 		$document = $document->toDataArray($skipId);
 	}
 

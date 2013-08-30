@@ -1,7 +1,6 @@
 <?php
 namespace mrdao;
 
-use w\data\Provider;
 use mrdao\Document;
 
 /**
@@ -9,37 +8,34 @@ use mrdao\Document;
  * @author Jan Prachař <jan.prachar@gmail.com>
  */
 class Dao {
-	use Storage;
 
-	/** @var \w\data\Provider */
-	protected $provider;
+	/** @var bool */
+	public static $underscore = true;
 
-	/** @var string */
+	/**
+	 * Document class name from Dao class namespace
+	 *
+	 * \some\namespace\document\MyDao => \some\namespace\document
+	 *
+	 * - php is case insensitive for class names
+	 *
+	 * @var string
+	 */
 	protected $documentClass;
 
-	/**
-	 * @param Provider $provider
-	 */
-	public function __construct(Provider $provider) {
-		$this->provider = $provider;
-		$this->documentClass = $this->getDocumentClass();
-	}
 
 	/**
-	 * @return string
+	 * @param null|string $documentClass
+	 * @param null|string $storage
 	 */
-	protected function getDocumentClass() {
-		$nsParts = explode('\\', get_called_class());
-		if (($l = count($nsParts)) < 2) {
-			return null;
-		}
-		$nsParts[$l - 2] = ucfirst($nsParts[$l - 2]);
-		return implode('\\', array_slice($nsParts, 0, -1));
+	public function __construct($documentClass = null, $storage = null) {
+		$this->documentClass = ($documentClass) ? : substr($class = get_called_class(), 0, strrpos($class, '\\'));
+		$this->storage = ($storage) ? : Document::getStorageName($this->documentClass);
 	}
 
 	/**
 	 * Creates a new document instance
-	 * 
+	 *
 	 * @access public
 	 * @return Document
 	 */
@@ -54,6 +50,7 @@ class Dao {
 	 *
 	 * @param array $array
 	 * @param bool|null $exists
+	 * @return bool
 	 */
 	public function fromArray(array $array, $exists = true) {
 		$object = $this->createDocument();

@@ -13,6 +13,9 @@ class MongoDocument extends Document {
 	/** @var null */
 	public static $collectionName = null;
 
+	/** @var bool */
+	public static $underScores = false;
+
 	/**
 	 * Return \MongoId intance
 	 *

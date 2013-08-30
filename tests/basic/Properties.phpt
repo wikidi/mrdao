@@ -27,3 +27,21 @@ Assert::same(Document::getPropertyName('UPPER_CASE'), 'uPPERCASE');
 Assert::same(Document::getPropertyName('its_ok_to_be_gay_'), 'itsOkToBeGay');
 Assert::same(Document::getPropertyName('its_ok_to_be_gay__'), 'itsOkToBeGay');
 Assert::same(Document::getPropertyName('its_OK_have_capital'), 'itsOKHaveCapital');
+
+// change naming conventions for document
+Document::$underscore = false;
+
+Assert::same(Document::getColumnName('_'), '_');
+Assert::same(Document::getColumnName('__'), '__');
+Assert::same(Document::getColumnName('id'), 'id');
+Assert::same(Document::getColumnName('testData'), 'testData');
+
+Assert::same(Document::getColumnName('BULLSHIT'), 'BULLSHIT');
+Assert::same(Document::getColumnName('someData'), 'someData');
+
+
+Assert::same(Document::getPropertyName('_id'), '_id'); // MongoId
+Assert::same(Document::getPropertyName('_ID'), '_ID');
+Assert::same(Document::getPropertyName('ID'), 'ID');
+Assert::same(Document::getPropertyName('I_D'), 'I_D');
+Assert::same(Document::getPropertyName('Leave_me_aSIs'), 'Leave_me_aSIs');

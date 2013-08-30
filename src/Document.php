@@ -1,6 +1,5 @@
 <?php
 namespace mrdao;
-use app\data\DataModel;
 
 /**
  * @author Roman Ozana <ozana@omdesign.cz>
@@ -15,7 +14,7 @@ abstract class Document {
 	protected $exists = false;
 
 	/** @var Dao */
-	protected  $dao;
+	protected $dao;
 
 	/**
 	 * @param string $name
@@ -27,7 +26,7 @@ abstract class Document {
 	}
 
 	/**
-	 * @param Dao $dao 
+	 * @param Dao $dao
 	 * @return void
 	 */
 	public function setDao(Dao $dao) {
@@ -76,6 +75,15 @@ abstract class Document {
 	 */
 	protected static function getClass() {
 		return get_called_class();
+	}
+
+	/**
+	 * @param $className
+	 * @return string
+	 */
+	public static function getStorageName($className) {
+		$name = substr($className, strrpos($className, '\\') + 1);
+		return (static::$underscore) ? strtolower(preg_replace('/(?=[A-Z])/', '_$1', $name)) : $name;
 	}
 
 }
