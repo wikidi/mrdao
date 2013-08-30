@@ -7,6 +7,7 @@ use mrdao\Document;
 require __DIR__ . '/../bootstrap.php';
 
 // Column
+Document::$underscore = true;
 
 Assert::same(Document::getColumnName('_'), '_');
 Assert::same(Document::getColumnName('__'), '__');

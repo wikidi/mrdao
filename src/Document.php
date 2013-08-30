@@ -7,6 +7,9 @@ namespace mrdao;
  */
 abstract class Document {
 
+	/** @var bool */
+	public static $underscore = true;
+
 	use Validation; // Document Validation trait
 	use Properties; // Document Properties trait
 

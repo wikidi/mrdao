@@ -9,12 +9,6 @@ trait Properties {
 	/** @var string */
 	public static $idColumnName = 'id';
 
-	/** @var bool */
-	public static $transform;
-
-	/** @var bool */
-	public static $underscore = true;
-
 	/**
 	 * Return default ID column name
 	 *
@@ -54,7 +48,7 @@ trait Properties {
 	 * @return string
 	 */
 	public static function getPropertyName($name) {
-		return ($name[0] === '_' || static::$underscore) ? $name : lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $name))));
+		return ($name[0] === '_' || !static::$underscore) ? $name : lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $name))));
 	}
 
 	/**
