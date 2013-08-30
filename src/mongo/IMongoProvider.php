@@ -9,10 +9,9 @@ interface IMongoProvider {
 	/**
 	 * Return selected database
 	 *
-	 * @param string|int|null $name
 	 * @return \MongoDB
 	 */
-	public function getDb($name = null);
+	public function getDb();
 
 	/**
 	 * Return MongoCollection from selected database

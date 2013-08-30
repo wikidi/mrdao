@@ -69,14 +69,14 @@ class MysqlDao extends Dao {
 			implode('`, `', $columns), ':' . implode(', :', $columns)
 		);
 
-		$statement = $this->getMaster()->prepare($query);
+		$statement = $this->provider->getMaster()->prepare($query);
 
 		foreach ($data as $property => $value) {
 			$statement->bindValue(':' . $property, $value, Helper::getPdoType($value));
 		}
 
 		if ($result = $statement->execute()) {
-			$document->setId($this->getMaster()->lastInsertId());
+			$document->setId($this->provider->getMaster()->lastInsertId());
 		}
 
 		return $result;
@@ -106,7 +106,7 @@ class MysqlDao extends Dao {
 
 		$data[$document->getIdName()] = $document->getId();
 
-		$statement = $this->getMaster()->prepare($query);
+		$statement = $this->provider->getMaster()->prepare($query);
 
 		foreach ($data as $property => $value) {
 			$statement->bindValue(':' . $property, $value, Helper::getPdoType($value));

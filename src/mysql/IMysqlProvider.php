@@ -8,20 +8,17 @@ interface IMysqlProvider {
 	/**
 	 * Return PDO connection
 	 *
-	 * @param $name
 	 * @return \PDO
 	 */
-	public function getConnection($name = null);
+	public function getConnection();
 
 	/**
-	 * @param null|string $name
 	 * @return \PDO
 	 */
-	public function getMaster($name = null);
+	public function getMaster();
 
 	/**
-	 * @param null|string $name
 	 * @return \PDO
 	 */
-	public function getSlave($name = null);
+	public function getSlave();
 }
