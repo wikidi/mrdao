@@ -14,7 +14,7 @@ class MongoDocument extends Document {
 	public static $collectionName = null;
 
 	/** @var bool */
-	public static $underScores = false;
+	public static $underscore = false;
 
 	/**
 	 * Return \MongoId interface
