@@ -108,6 +108,15 @@ class MongoDao extends Dao {
 	}
 
 	/**
+	 * @param string|\MongoId $id
+	 * @param array $options
+	 * @return mixed
+	 */
+	public function remove($id, array $options = array()) {
+		return $this->getCollection()->remove(array('_id' => strval($id)), static::options($options));
+	}
+
+	/**
 	 * @param array $documents
 	 * @param array $options
 	 * @throws \MongoException
