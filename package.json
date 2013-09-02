@@ -1,6 +1,6 @@
 {
   "name": "mrdao",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "(Simpler) DAO and Documents layer for Mongo, Mysql",
   "repository": {
     "type": "git",
