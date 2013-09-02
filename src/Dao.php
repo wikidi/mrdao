@@ -15,10 +15,6 @@ class Dao {
 	/**
 	 * Document class name from Dao class namespace
 	 *
-	 * \some\namespace\document\MyDao => \some\namespace\document
-	 *
-	 * - php is case insensitive for class names
-	 *
 	 * @var string|Document
 	 */
 	private $documentClass;
