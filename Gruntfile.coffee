@@ -2,6 +2,7 @@ module.exports = (grunt) ->
   grunt.initConfig
     bump:
       files: ['package.json']
+      pushTo: 'origin'
       push: false
     exec:
       test:
