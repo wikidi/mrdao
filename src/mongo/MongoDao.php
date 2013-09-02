@@ -53,11 +53,7 @@ class MongoDao extends Dao {
 	 * @return bool|array
 	 */
 	public function save(MongoDocument $document, array $options = array()) {
-		if ($document->exists()) {
-			return $this->update($document, $options);
-		} else {
-			return $this->insert($document, $options);
-		}
+		return $document->exists() ? $this->update($document, $options) : $this->insert($document, $options);
 	}
 
 	/**
@@ -91,7 +87,10 @@ class MongoDao extends Dao {
 	 */
 	public function insert(MongoDocument $document, array $options = array()) {
 		if (!$document->getId()) $document->setId(new \MongoId());
-		return $this->getCollection()->insert($document->toDataArray(), static::options($options));
+		if ($result = $this->getCollection()->insert($document->toDataArray(), static::options($options))) {
+			$document->exists($result);
+		}
+		return $result;
 	}
 
 	/**

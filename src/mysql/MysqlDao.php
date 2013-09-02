@@ -25,11 +25,7 @@ class MysqlDao extends Dao {
 	 * @return bool
 	 */
 	public function save(MysqlDocument $document) {
-		if ($document->exists()) {
-			return $this->update($document);
-		} else {
-			return $this->insert($document);
-		}
+		return $document->exists() ? $this->update($document) : $this->insert($document);
 	}
 
 	/**
@@ -77,10 +73,10 @@ class MysqlDao extends Dao {
 
 		if ($result = $statement->execute()) {
 			$document->setId($this->provider->getMaster()->lastInsertId());
+			$document->exists($result);
 		}
 
 		return $result;
-
 	}
 
 	/**
