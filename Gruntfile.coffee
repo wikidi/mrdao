@@ -2,8 +2,8 @@ module.exports = (grunt) ->
   grunt.initConfig
     bump:
       files: ['package.json']
-      pushTo: 'origin'
-      push: false
+      options:
+        pushTo: 'origin'
     exec:
       test:
         cmd: "vendor/bin/tester tests -c tests/php-unix.ini -j 10"
