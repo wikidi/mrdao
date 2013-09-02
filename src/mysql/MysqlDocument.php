@@ -8,9 +8,6 @@ use mrdao\Document;
  */
 class MysqlDocument extends Document {
 
-	/** @var bool */
-	public static $underScores = true;
-
 	/**
 	 * @return bool
 	 */

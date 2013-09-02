@@ -69,7 +69,7 @@ trait Validation {
 			$validator = $this->dataValidators[$property];
 		}
 
-		// simple function call like is_bool, is_string etc. expect one parametter
+		// simple function call like is_bool, is_string etc. expect one parameter
 		// complicated validators expect property value and property name
 		$args = is_string($validator) ? array($this->$property) : array($this->$property, $property);
 		return ($validator) ? call_user_func_array($validator, $args) : true;

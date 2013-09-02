@@ -11,6 +11,9 @@ use mrdao\DataModel;
  */
 class MongoDao extends Dao {
 
+	/** @var bool */
+	public static $underscore = false;
+
 	/** @var array */
 	public static $options = array();
 
@@ -26,7 +29,7 @@ class MongoDao extends Dao {
 	 * @return null|MongoDocument
 	 */
 	public function findById($id) {
-		$documentClass = $this->documentClass;
+		$documentClass = $this->getDocumentClass();
 		$array = $this->getByValue($id instanceof \MongoId ? $id : new \MongoId($id), $documentClass::getIdName());
 		return ($array) ? $this->fromArray($array, true) : null;
 	}

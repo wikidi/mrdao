@@ -9,7 +9,6 @@ class Helper {
 	public static $types = array(
 		'integer' => \PDO::PARAM_INT,
 		'boolean' => \PDO::PARAM_BOOL,
-		'integer' => \PDO::PARAM_INT,
 		'double' => \PDO::PARAM_STR,
 		'string' => \PDO::PARAM_STR,
 		'NULL' => \PDO::PARAM_NULL,
@@ -17,22 +16,23 @@ class Helper {
 
 	/**
 	 * @param \DateTime $value
+	 * @param string $quote
 	 * @return string
 	 */
-	public function formatDateTime(\DateTime $value) {
-		return $value->format("'Y-m-d H:i:s'");
+	public static function formatDateTime(\DateTime $value, $quote = "'") {
+		return $value->format($quote . 'Y-m-d H:i:s' . $quote);
 	}
 
 	/**
 	 * @param mixed $value
 	 * @return string
 	 */
-	public function formatBool($value) {
+	public static function formatBool($value) {
 		return $value ? '1' : '0';
 	}
 
 	/**
-	 * Vraci datovy typ na zaklade hodnoty gettype
+	 * Returns the data type based on the values ​​GetType
 	 *
 	 * @param mixed $value
 	 * @return int
@@ -45,7 +45,7 @@ class Helper {
 		} elseif ($type === 'object' && method_exists($value, '__toString')) {
 			return \PDO::PARAM_STR;
 		} else {
-			throw new \LogicException(sprintf('Uknown variable type "%s"', $type));
+			throw new \LogicException(sprintf('Unknown variable type "%s"', $type));
 		}
 	}
 
@@ -61,7 +61,7 @@ class Helper {
 		$pairs = array_reduce(
 			$columns,
 			function ($output, $name) {
-				return $output .= PHP_EOL . '`' . $name . '` = :' . $name . ', ';
+				return $output .= '`' . $name . '` = :' . $name . ', ';
 			}
 		);
 

@@ -19,21 +19,20 @@ class Dao {
 	 *
 	 * - php is case insensitive for class names
 	 *
-	 * @var string
+	 * @var string|Document
 	 */
 	private $documentClass;
 
 	/**
 	 * Name for storage name (e.g. SQL table)
-	 * 
+	 *
 	 * @var string
 	 */
 	private $storageName;
 
-
 	/**
 	 * @param null|string $documentClass
-	 * @param null|string $storage
+	 * @param null|string $storageName
 	 */
 	public function __construct($documentClass = null, $storageName = null) {
 		$this->documentClass = $documentClass;
@@ -106,7 +105,7 @@ class Dao {
 	public function getStorageName() {
 		if ($this->storageName === null) {
 			$name = lcfirst(substr($dc = '\\' . $this->getDocumentClass(), strrpos($dc, '\\') + 1));
-			$this->storageName =  (static::$underscore) ? strtolower(preg_replace('/(?=[A-Z])/', '_$1', $name)) : $name;
+			$this->storageName = (static::$underscore) ? strtolower(preg_replace('/(?=[A-Z])/', '_$1', $name)) : $name;
 		}
 		return $this->storageName;
 	}

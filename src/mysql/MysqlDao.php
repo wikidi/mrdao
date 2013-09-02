@@ -37,9 +37,9 @@ class MysqlDao extends Dao {
 	 * @return bool|null
 	 */
 	public function findById($id) {
-		$documentClass = $this->documentClass;
+		$documentClass = $this->getDocumentClass();
 		$array = $this->getByValue($id, $documentClass::getIdName());
-		return $array ? $this->fromArray($array, true) : null;
+		return $array ? $this->fromArray($array) : null;
 	}
 
 
@@ -130,7 +130,7 @@ class MysqlDao extends Dao {
 	}
 
 	/**
-	 * Spočítá všechny záznamy
+	 * Counts all records in table
 	 *
 	 * @return int
 	 */

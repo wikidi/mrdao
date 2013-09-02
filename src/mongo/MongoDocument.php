@@ -17,7 +17,7 @@ class MongoDocument extends Document {
 	public static $underScores = false;
 
 	/**
-	 * Return \MongoId intance
+	 * Return \MongoId interface
 	 *
 	 * @return \MongoId
 	 */
