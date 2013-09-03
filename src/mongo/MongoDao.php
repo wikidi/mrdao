@@ -123,7 +123,7 @@ class MongoDao extends Dao {
 	 * @return \MongoCollection
 	 */
 	public function getCollection() {
-		return $this->provider->{$this->getStorageName()};
+		return $this->provider->getCollection($this->getStorageName());
 	}
 
 	/**
