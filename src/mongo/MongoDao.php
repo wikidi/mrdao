@@ -68,8 +68,8 @@ class MongoDao extends Dao {
 	public function update(MongoDocument $document, array $options = array()) {
 		if (!$document->getId()) {
 			throw new InvalidPropertyValue('ID value missing in MongoDucument'); // check ID value
+		}
 
-	}
 		// Update whole document data
 		return $this->getCollection()->update(
 			array('_id' => $document->getId()),
@@ -102,7 +102,7 @@ class MongoDao extends Dao {
 	 * @throws \MongoCursorTimeoutException
 	 */
 	public function delete($object, array $options = array()) {
-		$id = $object instanceof MongoDocument ? $object->getId() : strval($object);
+		$id = (is_string($object) || $object instanceof \MongoId) ? new \MongoId(strval($object)) : $object->getId();
 		return $this->getCollection()->remove(array('_id' => ($id)), static::options($options));
 	}
 
