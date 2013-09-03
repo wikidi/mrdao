@@ -112,17 +112,21 @@ class MysqlDao extends Dao {
 	}
 
 	/**
-	 * @param MysqlDocument $document
-	 * @return bool
-	 * @return bool
+	 * @param MysqlDocument|string|int $object
+	 * @param null $idName
+	 * @return string
 	 */
-	public function delete(MysqlDocument $document) {
-		$query = sprintf(
-			'DELETE FROM `%s` WHERE `%s` = :id LIMIT 1',
-			$this->getStorageName(),
-			$document->getIdName()
-		);
-		return (bool)$this->query($query, array(':id' => $document->getId()));
+	public function delete($object, $idName = null) {
+		if ($object instanceof MysqlDocument) {
+			$idName = ($idName) ? : $object->getIdName();
+			$id = $object->getId();
+		} else {
+			$idName = ($idName) ? : 'id'; // default ID name
+			$id = $object;
+		}
+
+		$query = 'DELETE FROM `' . $this->getStorageName() . '` WHERE `' . $idName . '` = :id LIMIT 1';
+		return (bool)$this->query($query, array(':id' => $id));
 	}
 
 	/**

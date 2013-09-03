@@ -3,6 +3,7 @@ namespace mrdao\mongo;
 
 use mrdao\Dao;
 use mrdao\DataModel;
+use mrdao\Document;
 
 /**
  * @property IMongoProvider $provider
@@ -67,8 +68,8 @@ class MongoDao extends Dao {
 	public function update(MongoDocument $document, array $options = array()) {
 		if (!$document->getId()) {
 			throw new InvalidPropertyValue('ID value missing in MongoDucument'); // check ID value
-		}
 
+	}
 		// Update whole document data
 		return $this->getCollection()->update(
 			array('_id' => $document->getId()),
@@ -94,26 +95,15 @@ class MongoDao extends Dao {
 	}
 
 	/**
-	 * @param MongoDocument $document
+	 * @param MongoDocument|\MongoId|string $object
 	 * @param array $options
 	 * @return bool|array
 	 * @throws \MongoCursorException
 	 * @throws \MongoCursorTimeoutException
 	 */
-	public function delete(MongoDocument $document, array $options = array()) {
-		return $this->getCollection()->remove(
-			array('_id' => $document->getId()),
-			static::options($options)
-		);
-	}
-
-	/**
-	 * @param string|\MongoId $id
-	 * @param array $options
-	 * @return mixed
-	 */
-	public function remove($id, array $options = array()) {
-		return $this->getCollection()->remove(array('_id' => strval($id)), static::options($options));
+	public function delete($object, array $options = array()) {
+		$id = $object instanceof MongoDocument ? $object->getId() : strval($object);
+		return $this->getCollection()->remove(array('_id' => ($id)), static::options($options));
 	}
 
 	/**
