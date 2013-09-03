@@ -18,6 +18,7 @@
 		"classmap": ["src"]
 	},
 	"require-dev": {
+		"ext-mongo": ">=1.4.0",
 		"nette/tester": "@dev"
 	}
 }

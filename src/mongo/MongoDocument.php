@@ -16,6 +16,9 @@ class MongoDocument extends Document {
 	/** @var bool */
 	public static $underscore = false;
 
+	/** @var \MongoId */
+	public $_id;
+
 	/**
 	 * Return \MongoId interface
 	 *

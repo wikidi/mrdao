@@ -102,7 +102,9 @@ class MongoDao extends Dao {
 	 * @throws \MongoCursorTimeoutException
 	 */
 	public function delete($object, array $options = array()) {
-		$id = (is_string($object) || $object instanceof \MongoId) ? new \MongoId(strval($object)) : $object->getId();
+		$id = $object instanceof \MongoId ? $object : (
+			$object instanceof MongoDocument ? $object->getId() : new \MongoId($object)
+		);
 		return $this->getCollection()->remove(array('_id' => ($id)), static::options($options));
 	}
 

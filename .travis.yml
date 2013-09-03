@@ -10,4 +10,5 @@ services:
 
 before_script:
 # Install Nette Tester
+  - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer install --no-interaction --dev
